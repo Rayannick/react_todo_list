@@ -1,8 +1,27 @@
+
+// styling sidebar
+// styling button input
+// managing state to switch component 
+// handling project creation updating ui 
+// styling modal 
+// making projects selectable 
+// handling project deletion 
+// managing task 
+
+import NewProject from "./components/newProject";
+import ProjectsSidebar from "./components/projectsSidebar";
+
+
+
+
+
+
 function App() {
   return (
-    <>
-      <h1 className="my-8 text-center text-5xl font-bold">Hello World</h1>
-    </>
+    <main className="h-screen my-8">
+      <ProjectsSidebar />
+      <NewProject/>
+    </main>
   );
 }
 
