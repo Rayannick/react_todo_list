@@ -10,6 +10,8 @@
 
 
 // handling project creation updating ui 
+// creating the database, taking value from input, storing it , showing it to the sidebar.
+
 // styling modal 
 // making projects selectable 
 // handling project deletion 
@@ -45,10 +47,28 @@ function handleStartAddProject(){
 }
 
 
+function handleAddProject(projectData){
+  setProjectState((prev)=> {
+
+    const projectId = Math.random()
+    const newProject = {
+      ...projectData,
+      id : projectId
+    }
+
+    return {
+      ...prev,selectProjectId : undefined,projects : [...prev.projects,newProject]
+
+    }
+
+
+  })
+}
+
 
 let content;
  if(projectState.selectProjectId === null){
-  content = <NewProject></NewProject>
+  content = <NewProject onAdd= {handleAddProject} ></NewProject>
  }else if (projectState.selectProjectId === undefined){
   content = <NoProjectSelected onStartAddProject={handleStartAddProject}/>
  }
@@ -59,7 +79,7 @@ let content;
 
   return (
     <main className="h-screen my-8">
-      <ProjectsSidebar onStartAddProject = {handleStartAddProject}/>
+      <ProjectsSidebar projects={projectState.projects} onStartAddProject = {handleStartAddProject}/>
       {content}
     </main>
   );
