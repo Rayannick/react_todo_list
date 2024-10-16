@@ -1,5 +1,7 @@
+import Task from "./tasks"
+
 /* eslint-disable react/prop-types */
- export  default function SelectedProject ({project,onDelete}){
+ export  default function SelectedProject ({project,onDelete,onAddTask,onDeleteTask,tasks}){
 
 
 
@@ -24,6 +26,7 @@
           {project.description}
         </p>
       </header>
+      <Task onAdd={onAddTask} onDelete={onDeleteTask} tasks={tasks}></Task>
         </div>
     )
  }

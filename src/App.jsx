@@ -10,7 +10,7 @@
 
 
 // handling project creation updating ui 
-// creating the database, taking value from input, storing it , showing it to the sidebar.
+// ===>creating the database, taking value from input, storing it , showing it to the sidebar.
 
 // styling modal 
 //====> show a modal when input is invalid
@@ -21,8 +21,12 @@
 
 
 // handling project deletion 
-// ====>
+// ====>filter out the selected project for delete
+
+
 // managing task 
+// ===>field inside field , storing with main array
+
 
 import { useState } from "react";
 import NewProject from "./components/newProject";
@@ -39,7 +43,8 @@ function App() {
 
 const [projectState, setProjectState] = useState({
   selectProjectId : undefined,
-  projects : []
+  projects : [],
+  tasks : []
 
 
 })
@@ -82,7 +87,7 @@ function handleAddProject(projectData){
 
 const selectproject = projectState.projects.find((project)=>project.id === projectState.selectProjectId)
 
-let content = <SelectedProject project={selectproject} onDelete={handleDeleteProject}></SelectedProject>;
+let content = <SelectedProject project={selectproject} onDeleteTask={handleDeleteTask} onDelete={handleDeleteProject} onAddTask={handleAddTask} tasks={projectState.tasks}></SelectedProject>;
  if(projectState.selectProjectId === null){
   content = <NewProject onAdd= {handleAddProject} onCancel={handleCancelAddProject}></NewProject>
  }else if (projectState.selectProjectId === undefined){
@@ -119,6 +124,25 @@ let content = <SelectedProject project={selectproject} onDelete={handleDeletePro
   })
  }
 
+
+
+ function handleAddTask(text){
+  setProjectState((prev)=>{ 
+    const taskId  = Math.random();
+     const newTask = {
+      text: text,
+      projectId : prev.selectProjectId,
+      id : taskId
+     }
+     return{ ...prev,tasks : [newTask,...prev.tasks]}
+  })
+
+ }
+ function handleDeleteTask(id){
+  setProjectState((prev)=>{
+    return{...prev , tasks: prev.tasks.filter((task)=> task.id !== id)}
+  })
+}
   return (
     <main className="h-screen my-8">
       <ProjectsSidebar projects={projectState.projects} selectedProjectId={projectState.selectProjectId} onStartAddProject = {handleStartAddProject} onSelectedProject={handleSelectedProject}/>
