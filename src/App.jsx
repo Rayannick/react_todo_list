@@ -13,8 +13,15 @@
 // creating the database, taking value from input, storing it , showing it to the sidebar.
 
 // styling modal 
+//====> show a modal when input is invalid
+
+
 // making projects selectable 
+// ====> updating the project array  , show the project when it's id is selected
+
+
 // handling project deletion 
+// ====>
 // managing task 
 
 import { useState } from "react";
@@ -75,7 +82,7 @@ function handleAddProject(projectData){
 
 const selectproject = projectState.projects.find((project)=>project.id === projectState.selectProjectId)
 
-let content = <SelectedProject project={selectproject}></SelectedProject>;
+let content = <SelectedProject project={selectproject} onDelete={handleDeleteProject}></SelectedProject>;
  if(projectState.selectProjectId === null){
   content = <NewProject onAdd= {handleAddProject} onCancel={handleCancelAddProject}></NewProject>
  }else if (projectState.selectProjectId === undefined){
@@ -102,10 +109,19 @@ let content = <SelectedProject project={selectproject}></SelectedProject>;
 
  }
 
+ function handleDeleteProject(){
+  setProjectState((prev)=>{
+
+    // as id is already selected when clicked on the project we dont need pass the id.
+    return{
+      ...prev,selectProjectId: undefined , projects : prev.projects.filter((project)=> project.id !== prev.selectProjectId)
+    }
+  })
+ }
 
   return (
     <main className="h-screen my-8">
-      <ProjectsSidebar projects={projectState.projects} onStartAddProject = {handleStartAddProject} onSelectedProject={handleSelectedProject}/>
+      <ProjectsSidebar projects={projectState.projects} selectedProjectId={projectState.selectProjectId} onStartAddProject = {handleStartAddProject} onSelectedProject={handleSelectedProject}/>
       {content}
     </main>
   );
